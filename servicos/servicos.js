@@ -1,20 +1,20 @@
-import historicoInflacao from "../dados/dados.js"
+import historicoInflacao from "../dados/dados.js";
 
 export const pesquisarTodaLista = () => {
-    return historicoInflacao
-}
+    return historicoInflacao;
+};
 
 export const consultarAno = (anoInformado) => {
-    const ano  = anoInformado;
+    const ano = anoInformado;
     return historicoInflacao.filter(ipca => ipca.ano == ano);
-}
+};
 
 export const buscarIpcaPorId = (id) => {
     const idIpca = parseInt(id);
     return historicoInflacao.filter(ipca => ipca.id == idIpca);
-}
+};
 
-export const calcular = (valor, mesInicial, anoInicial, mesFinal, anoFinal) => {
+export const calcularValor = (valor, mesInicial, anoInicial, mesFinal, anoFinal) => {
     // Filtra o histórico de inflação com base nos parâmetros fornecidos
     const listaIpca = historicoInflacao.filter((ipca) => {
         return (
@@ -31,7 +31,6 @@ export const calcular = (valor, mesInicial, anoInicial, mesFinal, anoFinal) => {
     listaIpca.forEach(ipca => {
         resultado *= (1 + (ipca.ipca / 100));
     });
-
-    return resultado;
+    let valorArrendondado = parseFloat(resultado.toFixed(2))
+    return valorArrendondado;
 };
-
