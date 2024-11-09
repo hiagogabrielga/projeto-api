@@ -7,14 +7,9 @@ const app = express();
 app.get("/historicoIPCA/", (req, res) => {
     var resultado;
     const anoInformado = parseInt(req.query.ano);
-    console.log()
+    //Tratamento de erro
     if (isNaN(parseInt(req.query.ano))) {
-        if (typeof req.query.ano) {
-            res.status(400).json({ erro: "Este parâmetro é inválido." });
-        } else {
-            resultado = pesquisarTodaLista();
-            res.json(resultado)
-        }
+        res.status(400).json({ erro: "Este parâmetro é inválido." });
 
     } else if (anoInformado < 2015 || anoInformado > 2024) {
         res.status(404).json({ erro: "Nenhum histórico encontrato para o ano especificado" });
@@ -24,12 +19,15 @@ app.get("/historicoIPCA/", (req, res) => {
     }
 });
 
+
 app.get("/historicoIPCA/calculo/", (req, res) => {
     const valor = parseFloat(req.query.valor);
     const mesInicial = parseInt(req.query.mesInicial);
     const anoInicial = parseInt(req.query.anoInicial);
     const mesFinal = parseInt(req.query.mesFinal);
     const anoFinal = parseInt(req.query.anoFinal);
+
+    //Tratamento de erro
     if (isNaN(valor) || isNaN(mesInicial) || isNaN(anoInicial) || isNaN(mesFinal) || isNaN(anoFinal)) {
         return res.status(400).json({ erro: "Parâmetros inválidos" });
     } else if (anoInicial > anoFinal || anoInicial == anoFinal && mesInicial > mesFinal) {
@@ -49,9 +47,9 @@ app.get("/historicoIPCA/:id", (req, res) => {
     } else {
         res.json(buscarIpcaPorId(idIpca));
     }
-
 });
 
+//Tratamento de erro
 app.use((req, res, next) => {
     res.status(404).json({ error: "Endpoint não encontrado" });
 });
