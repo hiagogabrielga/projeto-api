@@ -9,7 +9,13 @@ app.get("/historicoIPCA/", (req, res) => {
     const anoInformado = parseInt(req.query.ano);
     //Tratamento de erro
     if (isNaN(parseInt(req.query.ano))) {
-        res.status(400).json({ erro: "Este parâmetro é inválido." });
+        if (req.query.ano === undefined) {
+            resultado = pesquisarTodaLista();
+            res.json(resultado)
+        } else {
+            res.status(400).json({ erro: "Este parâmetro é inválido." });
+        }
+        
 
     } else if (anoInformado < 2015 || anoInformado > 2024) {
         res.status(404).json({ erro: "Nenhum histórico encontrato para o ano especificado" });
