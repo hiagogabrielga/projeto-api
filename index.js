@@ -61,7 +61,7 @@ app.use((req, res, next) => {
 });
 
 
-const data = new Date();
+const data = Date();
 app.listen(8080, () => {
     console.log("Servidor iniciado com sucesso na porta 8080 em", data);
 });
